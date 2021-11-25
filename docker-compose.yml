@@ -1,0 +1,24 @@
+version: '3.3'
+services:
+  telegram-bot:
+    build: .
+    hostname: telegram-bot
+    restart: always
+    container_name: telegram-bot
+    environment:
+      - TG_TOKEN
+      - LOG_LEVEL=debug
+      - DB_HOST=mongodb://mongo:27017/
+      - LOG_FMT=json
+    ports:
+      - "18001:18001"
+
+  mongo:
+    image: mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_DATABASE=birthdate
+    volumes:
+      - ./mongo/data:/data/db
